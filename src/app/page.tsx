@@ -19,11 +19,13 @@ export default function Home() {
     reset,
     updateSettings,
     requestNotificationPermission,
+    playCompletionSound,
   } = usePomodoro();
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notificationPermission, setNotificationPermission] =
     useState<NotificationPermission>("default");
+  const isDebug = process.env.NODE_ENV !== "production";
 
   // 알림 권한 확인
   useEffect(() => {
@@ -99,6 +101,16 @@ export default function Home() {
           onReset={reset}
           onSettings={() => setSettingsOpen(true)}
         />
+
+        {isDebug && (
+          <button
+            type="button"
+            onClick={playCompletionSound}
+            className="px-3 py-1 text-xs sm:text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded transition-colors"
+          >
+            디버그: 소리 테스트
+          </button>
+        )}
 
         {/* 현재 설정 표시 */}
         <div className="text-center text-xs sm:text-sm text-gray-400">
