@@ -1,103 +1,126 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect, useMemo } from "react";
+import { usePomodoro } from "@/hooks/usePomodoro";
+import { PomodoroVisualizer } from "@/components/pomodoro/PomodoroVisualizer";
+import { Timer } from "@/components/pomodoro/Timer";
+import { Controls } from "@/components/pomodoro/Controls";
+import { SettingsDialog } from "@/components/pomodoro/SettingsDialog";
+import { Bell } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const {
+    mode,
+    status,
+    timeLeft,
+    settings,
+    start,
+    pause,
+    reset,
+    updateSettings,
+    requestNotificationPermission,
+  } = usePomodoro();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [notificationPermission, setNotificationPermission] =
+    useState<NotificationPermission>("default");
+
+  // 알림 권한 확인
+  useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      setNotificationPermission(Notification.permission);
+    }
+  }, []);
+
+  // 진행도 계산 (0 ~ 1)
+  const progress = useMemo(() => {
+    const totalTime =
+      mode === "focus"
+        ? settings.focusDuration * 60
+        : settings.breakDuration * 60;
+    return totalTime > 0 ? timeLeft / totalTime : 0;
+  }, [mode, timeLeft, settings]);
+
+  // 알림 권한 요청 핸들러
+  const handleNotificationRequest = async () => {
+    await requestNotificationPermission();
+    if (typeof window !== "undefined" && "Notification" in window) {
+      setNotificationPermission(Notification.permission);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 flex flex-col items-center justify-center p-4 sm:p-8">
+      {/* 헤더 */}
+      <div className="absolute top-4 sm:top-8 left-0 right-0 flex justify-center px-4">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+          zeropamine
+        </h1>
+      </div>
+
+      {/* 알림 권한 요청 배너 */}
+      {notificationPermission === "default" && (
+        <div className="absolute top-16 sm:top-20 left-4 right-4 sm:left-auto sm:right-auto sm:mx-auto max-w-md px-2 sm:px-6">
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
+            <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0" />
+            <div className="flex-1 text-xs sm:text-sm text-white">
+              <p className="font-medium">알림 받기</p>
+              <p className="text-gray-300 text-xs hidden sm:block">
+                타이머 종료 시 알림을 받으시겠습니까?
+              </p>
+            </div>
+            <button
+              onClick={handleNotificationRequest}
+              className="px-2 sm:px-3 py-1 bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm rounded transition-colors whitespace-nowrap"
+            >
+              허용
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      )}
+
+      {/* 메인 컨텐츠 */}
+      <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-12 max-w-2xl w-full mt-16 sm:mt-0">
+        {/* 테마 비주얼 */}
+        <PomodoroVisualizer
+          mode={mode}
+          progress={progress}
+          theme={settings.theme}
+        />
+
+        {/* 타이머 */}
+        <Timer mode={mode} timeLeft={timeLeft} />
+
+        {/* 컨트롤 버튼 */}
+        <Controls
+          status={status}
+          onStart={start}
+          onPause={pause}
+          onReset={reset}
+          onSettings={() => setSettingsOpen(true)}
+        />
+
+        {/* 현재 설정 표시 */}
+        <div className="text-center text-xs sm:text-sm text-gray-400">
+          <p>
+            집중 {settings.focusDuration}분 · 휴식 {settings.breakDuration}분
+            {settings.autoStart && " · 자동 시작"}
+          </p>
+        </div>
+      </div>
+
+      {/* 설정 다이얼로그 */}
+      <SettingsDialog
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        settings={settings}
+        onSave={updateSettings}
+      />
+
+      {/* 푸터 */}
+      <footer className="mt-8 sm:mt-12 text-center text-gray-500 text-xs sm:text-sm px-4">
+        <p>집중력을 위한 뽀모도로 타이머</p>
       </footer>
-    </div>
+    </main>
   );
 }
