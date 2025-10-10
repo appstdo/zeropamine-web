@@ -41,7 +41,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
         <path
           d="M 40 80 L 152 80 C 160 80 164 84 164 92 L 160 178 C 158 216 120 224 96 224 C 72 224 34 216 32 178 L 28 92 C 28 84 32 80 40 80 Z"
           stroke="white"
-          strokeWidth="10"
+          strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -49,7 +49,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
         <path
           d="M 152 108 C 176 108 184 124 184 144 C 184 164 176 180 152 180"
           stroke="white"
-          strokeWidth="10"
+          strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -64,15 +64,15 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
       >
         <defs>
           <clipPath id="coffee-fill-clip">
-            <path d="M 44 84 L 148 84 C 154 84 159 86 159 92 L 155 174 C 155 206 125 218 95 219 C 66 218 37 207 37 174 L 33 92 C 33 86 38 84 44 84 Z" />
+            <path d="M 44 84 L 154 84 C 159 84 163 86 163 92 L 159 175 C 157 208 132 222 98 221 C 64 222 36 207 35 176 L 31 93 C 31 86 36 84 41 84 Z" />
           </clipPath>
         </defs>
 
         <rect
-          x="34"
+          x="32"
           y={FILL_BOTTOM_Y - fillHeight + 10}
-          width="124"
-          height={fillHeight}
+          width="140"
+          height={fillHeight + 10}
           fill={fillColor}
           opacity={fillOpacity}
           clipPath="url(#coffee-fill-clip)"

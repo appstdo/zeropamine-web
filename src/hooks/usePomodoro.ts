@@ -92,7 +92,7 @@ export function usePomodoro() {
 
     // 전체 볼륨
     const masterGain = audioContext.createGain();
-    masterGain.gain.setValueAtTime(0.22, now);
+    masterGain.gain.setValueAtTime(1.5, now);
 
     // 체인: bandpass → shaper → destination
     bandpass.connect(shaper);
