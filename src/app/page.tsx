@@ -20,6 +20,7 @@ export default function Home() {
     updateSettings,
     requestNotificationPermission,
     playCompletionSound,
+    startTenSecondTest,
   } = usePomodoro();
 
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -42,6 +43,17 @@ export default function Home() {
         : settings.breakDuration * 60;
     return totalTime > 0 ? timeLeft / totalTime : 0;
   }, [mode, timeLeft, settings]);
+
+  const focusProgress = useMemo(
+    () => Math.min(1, Math.max(0, progress)),
+    [progress],
+  );
+  const breakProgress = useMemo(
+    () => Math.min(1, Math.max(0, 1 - progress)),
+    [progress],
+  );
+  const displayProgress = mode === "focus" ? focusProgress : breakProgress;
+  const progressPercentage = Math.round(displayProgress * 100);
 
   // 알림 권한 요청 핸들러
   const handleNotificationRequest = async () => {
@@ -93,6 +105,23 @@ export default function Home() {
         {/* 타이머 */}
         <Timer mode={mode} timeLeft={timeLeft} />
 
+        <div
+          role="progressbar"
+          aria-label="타이머 진행도"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progressPercentage}
+          aria-valuetext={`진행률 ${progressPercentage}%`}
+          className="w-full max-w-md h-3 sm:h-4 bg-white/10 border border-white/10 rounded-full overflow-hidden shadow-inner"
+        >
+          <div
+            className={`h-full transition-all duration-700 ease-linear ${
+              mode === "focus" ? "bg-amber-400/90" : "bg-white/80"
+            }`}
+            style={{ width: `${displayProgress * 100}%` }}
+          />
+        </div>
+
         {/* 컨트롤 버튼 */}
         <Controls
           status={status}
@@ -103,13 +132,22 @@ export default function Home() {
         />
 
         {isDebug && (
-          <button
-            type="button"
-            onClick={playCompletionSound}
-            className="px-3 py-1 text-xs sm:text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded transition-colors"
-          >
-            디버그: 소리 테스트
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={playCompletionSound}
+              className="px-3 py-1 text-xs sm:text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded transition-colors"
+            >
+              디버그: 소리 테스트
+            </button>
+            <button
+              type="button"
+              onClick={startTenSecondTest}
+              className="px-3 py-1 text-xs sm:text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded transition-colors"
+            >
+              디버그: 10초 테스트
+            </button>
+          </div>
         )}
 
         {/* 현재 설정 표시 */}

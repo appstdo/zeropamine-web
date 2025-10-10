@@ -27,7 +27,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
 
   return (
     <div
-      className="relative w-80 h-96 sm:w-80 sm:h-96 md:w-80 md:h-96 flex items-center justify-center"
+      className="relative w-80 h-96 sm:w-80 sm:h-96 md:w-80 md:h-106 flex items-center justify-center"
       aria-label="커피 머그잔"
     >
       <svg
@@ -41,7 +41,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
         <path
           d="M 40 80 L 152 80 C 160 80 164 84 164 92 L 160 178 C 158 216 120 224 96 224 C 72 224 34 216 32 178 L 28 92 C 28 84 32 80 40 80 Z"
           stroke="white"
-          strokeWidth="12"
+          strokeWidth="10"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -49,7 +49,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
         <path
           d="M 152 108 C 176 108 184 124 184 144 C 184 164 176 180 152 180"
           stroke="white"
-          strokeWidth="12"
+          strokeWidth="10"
           strokeLinecap="round"
           strokeLinejoin="round"
         />

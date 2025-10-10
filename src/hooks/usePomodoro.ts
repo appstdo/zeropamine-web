@@ -278,6 +278,15 @@ export function usePomodoro() {
     }));
   }, []);
 
+  const startTenSecondTest = useCallback(() => {
+    ensureAudioContext();
+    setState((prev) => ({
+      ...prev,
+      status: "running",
+      timeLeft: 10,
+    }));
+  }, [ensureAudioContext]);
+
   // 설정 업데이트
   const updateSettings = useCallback(
     (newSettings: Partial<PomodoroSettings>) => {
@@ -316,5 +325,6 @@ export function usePomodoro() {
     updateSettings,
     requestNotificationPermission,
     playCompletionSound,
+    startTenSecondTest,
   };
 }
