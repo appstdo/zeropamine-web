@@ -8,11 +8,18 @@ import type {
   TimerStatus,
 } from "@/types/pomodoro";
 
+type TrackedAudioNode = {
+  node: AudioNode;
+  stop?: () => void;
+};
+
 const DEFAULT_SETTINGS: PomodoroSettings = {
   focusDuration: 25,
   breakDuration: 5,
   autoStart: false,
   theme: "hourglass",
+  soundType: "alarm",
+  volume: 1,
 };
 
 const STORAGE_KEY = "zeropamine-settings";
@@ -29,6 +36,8 @@ export function usePomodoro() {
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const { soundType: activeSoundType, volume: activeVolume } = state.settings;
+  const previewNodesRef = useRef<TrackedAudioNode[]>([]);
 
   const ensureAudioContext = useCallback(() => {
     if (typeof window === "undefined") {
@@ -59,99 +68,322 @@ export function usePomodoro() {
     return context;
   }, []);
 
-  const playCompletionSound = useCallback(() => {
-    const audioContext = ensureAudioContext();
-    if (!audioContext) return;
+  const stopPreviewSound = useCallback(() => {
+    previewNodesRef.current.forEach(({ stop, node }) => {
+      try {
+        stop?.();
+      } catch {
+        // ignore stop errors
+      }
+      try {
+        node.disconnect();
+      } catch {
+        // ignore disconnect errors
+      }
+    });
+    previewNodesRef.current = [];
+  }, []);
 
-    const now = audioContext.currentTime;
+  useEffect(
+    () => () => {
+      stopPreviewSound();
+    },
+    [stopPreviewSound]
+  );
 
-    // ===== 자명종 느낌 파라미터 =====
-    const pairCount = 5; // 이중 펄스 반복 횟수
-    const toneA = 1700; // 첫 톤(Hz)
-    const toneB = 2000; // 두 번째 톤(Hz)
-    const singleDur = 0.11; // 한 톤 길이(초)
-    const intraGap = 0.03; // 이중 톤 사이 간격(초)
-    const pairGap = 0.18; // 다음 이중 톤까지 간격(초)
+  const playSound = useCallback(
+    (
+      soundTypeParam: PomodoroSettings["soundType"],
+      volumeParam: number,
+      trackNodes = false
+    ) => {
+      const audioContext = ensureAudioContext();
+      if (!audioContext) return;
 
-    // 얇은 금속성 대역을 강조하는 BPF
-    const bandpass = audioContext.createBiquadFilter();
-    bandpass.type = "bandpass";
-    bandpass.frequency.setValueAtTime(1850, now);
-    bandpass.Q.setValueAtTime(6, now);
+      const normalizedVolume = Math.max(
+        0,
+        Math.min(1, volumeParam ?? DEFAULT_SETTINGS.volume)
+      );
 
-    // 약한 하드-클리핑으로 금속성 질감 강화
-    const shaper = audioContext.createWaveShaper();
-    const curve = new Float32Array(1024);
-    for (let i = 0; i < curve.length; i++) {
-      const x = (i / (curve.length - 1)) * 2 - 1;
-      // 부드러운 소프트클립 → 살짝 거친 하모닉
-      curve[i] = Math.tanh(2.2 * x);
-    }
-    shaper.curve = curve;
-    shaper.oversample = "2x";
+      const now = audioContext.currentTime;
+      type RegisterFn = (node: AudioNode, stop?: () => void) => void;
+      const register: RegisterFn | undefined = trackNodes
+        ? (node, stop) => {
+            previewNodesRef.current.push({ node, stop });
+          }
+        : undefined;
 
-    // 전체 볼륨
-    const masterGain = audioContext.createGain();
-    masterGain.gain.setValueAtTime(1.5, now);
-
-    // 체인: bandpass → shaper → destination
-    bandpass.connect(shaper);
-    shaper.connect(masterGain);
-    masterGain.connect(audioContext.destination);
-
-    // 한 톤(금속성 펄스) 생성 & 스케줄
-    const scheduleTone = (startTime: number, freq: number) => {
-      // 금속성 느낌: 좁은 펄스파(PeriodicWave) + 약간의 디튠 2보이스
-      const makeVoice = (detuneCents: number) => {
-        const osc = audioContext.createOscillator();
-        // 펄스파를 PeriodicWave로 흉내 (사각보다 더 얇은 질감)
-        // 1/n 고조파를 일부만 남겨 얇은 대역을 강조
-        const harmonics = 32;
-        const real = new Float32Array(harmonics);
-        const imag = new Float32Array(harmonics);
-        for (let n = 1; n < harmonics; n++) {
-          // 홀수 위주 + 고역 완만 감쇠
-          const amp = n % 2 === 1 ? 1 / (n * 0.85) : 0.12 / n;
-          imag[n] = amp;
+      const masterGain = audioContext.createGain();
+      masterGain.gain.setValueAtTime(0.3 * normalizedVolume, now);
+      masterGain.connect(audioContext.destination);
+      register?.(masterGain, () => {
+        masterGain.gain.cancelScheduledValues(audioContext.currentTime);
+        masterGain.gain.setValueAtTime(0, audioContext.currentTime);
+        try {
+          masterGain.disconnect();
+        } catch {
+          // ignore
         }
-        const wave = audioContext.createPeriodicWave(real, imag, {
-          disableNormalization: false,
+      });
+
+      const playAlarmSound = () => {
+        const pairCount = 5;
+        const toneA = 1700;
+        const toneB = 2000;
+        const singleDur = 0.11;
+        const intraGap = 0.03;
+        const pairGap = 0.18;
+
+        const bandpass = audioContext.createBiquadFilter();
+        bandpass.type = "bandpass";
+        bandpass.frequency.setValueAtTime(1850, now);
+        bandpass.Q.setValueAtTime(6, now);
+        register?.(bandpass, () => {
+          try {
+            bandpass.disconnect();
+          } catch {
+            // ignore
+          }
         });
-        osc.setPeriodicWave(wave);
-        osc.frequency.setValueAtTime(freq, startTime);
-        osc.detune.setValueAtTime(detuneCents, startTime);
-        return osc;
+
+        const shaper = audioContext.createWaveShaper();
+        const curve = new Float32Array(1024);
+        for (let i = 0; i < curve.length; i += 1) {
+          const x = (i / (curve.length - 1)) * 2 - 1;
+          curve[i] = Math.tanh(2.2 * x);
+        }
+        shaper.curve = curve;
+        shaper.oversample = "2x";
+        register?.(shaper, () => {
+          try {
+            shaper.disconnect();
+          } catch {
+            // ignore
+          }
+        });
+
+        bandpass.connect(shaper);
+        shaper.connect(masterGain);
+
+        const scheduleTone = (startTime: number, freq: number) => {
+          const makeVoice = (detuneCents: number) => {
+            const osc = audioContext.createOscillator();
+            const harmonics = 32;
+            const real = new Float32Array(harmonics);
+            const imag = new Float32Array(harmonics);
+            for (let n = 1; n < harmonics; n += 1) {
+              const amp = n % 2 === 1 ? 1 / (n * 0.85) : 0.12 / n;
+              imag[n] = amp;
+            }
+            const wave = audioContext.createPeriodicWave(real, imag, {
+              disableNormalization: false,
+            });
+            osc.setPeriodicWave(wave);
+            osc.frequency.setValueAtTime(freq, startTime);
+            osc.detune.setValueAtTime(detuneCents, startTime);
+            register?.(osc, () => {
+              try {
+                osc.stop(audioContext.currentTime);
+              } catch {
+                // ignore
+              }
+              try {
+                osc.disconnect();
+              } catch {
+                // ignore
+              }
+            });
+            return osc;
+          };
+
+          const v1 = makeVoice(-8);
+          const v2 = makeVoice(+8);
+
+          const g = audioContext.createGain();
+          g.gain.setValueAtTime(0.0001, startTime);
+          g.gain.exponentialRampToValueAtTime(0.42, startTime + 0.015);
+          g.gain.exponentialRampToValueAtTime(
+            0.22,
+            startTime + singleDur - 0.04
+          );
+          g.gain.exponentialRampToValueAtTime(0.0001, startTime + singleDur);
+          register?.(g, () => {
+            try {
+              g.disconnect();
+            } catch {
+              // ignore
+            }
+          });
+
+          v1.connect(g);
+          v2.connect(g);
+          g.connect(bandpass);
+
+          v1.start(startTime);
+          v2.start(startTime);
+          v1.stop(startTime + singleDur + 0.02);
+          v2.stop(startTime + singleDur + 0.02);
+        };
+
+        let t = now;
+        for (let i = 0; i < pairCount; i += 1) {
+          scheduleTone(t, toneA);
+          t += singleDur + intraGap;
+          scheduleTone(t, toneB);
+          t += singleDur + pairGap;
+        }
       };
 
-      const v1 = makeVoice(-8);
-      const v2 = makeVoice(+8);
+      const playBellSound = () => {
+        const baseFrequency = 880;
+        const strikeInterval = 0.4;
+        const strikeCount = 3;
 
-      // 클릭감 있는 엔벌로프
-      const g = audioContext.createGain();
-      g.gain.setValueAtTime(0.0001, startTime);
-      g.gain.exponentialRampToValueAtTime(0.42, startTime + 0.015); // 빠른 어택
-      g.gain.exponentialRampToValueAtTime(0.22, startTime + singleDur - 0.04);
-      g.gain.exponentialRampToValueAtTime(0.0001, startTime + singleDur);
+        const strikeNoiseBuffer = audioContext.createBuffer(
+          1,
+          audioContext.sampleRate * 0.2,
+          audioContext.sampleRate
+        );
+        const data = strikeNoiseBuffer.getChannelData(0);
+        for (let i = 0; i < data.length; i += 1) {
+          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
+        }
 
-      v1.connect(g);
-      v2.connect(g);
-      g.connect(bandpass);
+        const scheduleBellStrike = (strikeTime: number) => {
+          const createPartial = (
+            frequency: number,
+            gainValue: number,
+            decay: number
+          ) => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
 
-      v1.start(startTime);
-      v2.start(startTime);
-      v1.stop(startTime + singleDur + 0.02);
-      v2.stop(startTime + singleDur + 0.02);
-    };
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(frequency, strikeTime);
 
-    // 이중 톤을 pairCount만큼 반복 스케줄
-    let t = now;
-    for (let i = 0; i < pairCount; i += 1) {
-      scheduleTone(t, toneA);
-      t += singleDur + intraGap;
-      scheduleTone(t, toneB);
-      t += singleDur + pairGap;
-    }
-  }, [ensureAudioContext]);
+            gain.gain.setValueAtTime(gainValue, strikeTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, strikeTime + decay);
+
+            filter.type = "bandpass";
+            filter.frequency.setValueAtTime(frequency, strikeTime);
+            filter.Q.setValueAtTime(12, strikeTime);
+
+            osc.connect(gain);
+            gain.connect(filter);
+            filter.connect(masterGain);
+
+            register?.(osc, () => {
+              try {
+                osc.stop(audioContext.currentTime);
+              } catch {
+                // ignore
+              }
+              try {
+                osc.disconnect();
+              } catch {
+                // ignore
+              }
+            });
+            register?.(gain, () => {
+              try {
+                gain.disconnect();
+              } catch {
+                // ignore
+              }
+            });
+            register?.(filter, () => {
+              try {
+                filter.disconnect();
+              } catch {
+                // ignore
+              }
+            });
+
+            osc.start(strikeTime);
+            osc.stop(strikeTime + decay + 0.1);
+          };
+
+          createPartial(baseFrequency, 0.9, 1.2);
+          createPartial(baseFrequency * 2, 0.4, 0.9);
+          createPartial(baseFrequency * 2.5, 0.25, 0.7);
+          createPartial(baseFrequency * 3, 0.18, 0.6);
+
+          const noise = audioContext.createBufferSource();
+          noise.buffer = strikeNoiseBuffer;
+          register?.(noise, () => {
+            try {
+              noise.stop(audioContext.currentTime);
+            } catch {
+              // ignore
+            }
+            try {
+              noise.disconnect();
+            } catch {
+              // ignore
+            }
+          });
+
+          const noiseGain = audioContext.createGain();
+          noiseGain.gain.setValueAtTime(0.2, strikeTime);
+          noiseGain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            strikeTime + 0.25
+          );
+          register?.(noiseGain, () => {
+            try {
+              noiseGain.disconnect();
+            } catch {
+              // ignore
+            }
+          });
+
+          const highpass = audioContext.createBiquadFilter();
+          highpass.type = "highpass";
+          highpass.frequency.setValueAtTime(600, strikeTime);
+          register?.(highpass, () => {
+            try {
+              highpass.disconnect();
+            } catch {
+              // ignore
+            }
+          });
+
+          noise.connect(highpass);
+          highpass.connect(noiseGain);
+          noiseGain.connect(masterGain);
+
+          noise.start(strikeTime);
+          noise.stop(strikeTime + 0.3);
+        };
+
+        let strikeTime = now;
+        for (let i = 0; i < strikeCount; i += 1) {
+          scheduleBellStrike(strikeTime);
+          strikeTime += strikeInterval;
+        }
+      };
+
+      if (soundTypeParam === "bell") {
+        playBellSound();
+      } else {
+        playAlarmSound();
+      }
+    },
+    [ensureAudioContext]
+  );
+
+  const playCompletionSound = useCallback(() => {
+    playSound(activeSoundType, activeVolume, false);
+  }, [playSound, activeSoundType, activeVolume]);
+
+  const previewSound = useCallback(
+    (type: PomodoroSettings["soundType"], volumeValue: number) => {
+      stopPreviewSound();
+      playSound(type, volumeValue, true);
+    },
+    [playSound, stopPreviewSound]
+  );
 
   // 클라이언트에서 기존 설정 불러오기 (SSR과의 초기 불일치 방지)
   useEffect(() => {
@@ -170,6 +402,11 @@ export function usePomodoro() {
         ...DEFAULT_SETTINGS,
         ...raw,
         theme: raw?.theme === "coffee" ? "coffee" : "hourglass",
+        soundType: raw?.soundType === "bell" ? "bell" : "alarm",
+        volume:
+          typeof raw?.volume === "number"
+            ? Math.max(0, Math.min(1, raw.volume))
+            : DEFAULT_SETTINGS.volume,
       };
       setState((prev) => ({
         ...prev,
@@ -270,11 +507,9 @@ export function usePomodoro() {
   const reset = useCallback(() => {
     setState((prev) => ({
       ...prev,
+      mode: "focus",
       status: "idle",
-      timeLeft:
-        prev.mode === "focus"
-          ? prev.settings.focusDuration * 60
-          : prev.settings.breakDuration * 60,
+      timeLeft: prev.settings.focusDuration * 60,
     }));
   }, []);
 
@@ -293,14 +528,35 @@ export function usePomodoro() {
       setState((prev) => {
         const updated = { ...prev.settings, ...newSettings };
         const nextTheme = updated.theme === "coffee" ? "coffee" : "hourglass";
+        const nextSoundType = updated.soundType === "bell" ? "bell" : "alarm";
+        const nextVolume =
+          typeof updated.volume === "number"
+            ? Math.max(0, Math.min(1, updated.volume))
+            : prev.settings.volume;
+        const nextFocusDuration =
+          typeof updated.focusDuration === "number"
+            ? Math.max(1, Math.min(120, updated.focusDuration))
+            : prev.settings.focusDuration;
+        const nextBreakDuration =
+          typeof updated.breakDuration === "number"
+            ? Math.max(1, Math.min(60, updated.breakDuration))
+            : prev.settings.breakDuration;
+
         return {
           ...prev,
-          settings: { ...updated, theme: nextTheme },
+          settings: {
+            ...updated,
+            focusDuration: nextFocusDuration,
+            breakDuration: nextBreakDuration,
+            theme: nextTheme,
+            soundType: nextSoundType,
+            volume: nextVolume,
+          },
           timeLeft:
             prev.status === "idle"
               ? (prev.mode === "focus"
-                  ? updated.focusDuration
-                  : updated.breakDuration) * 60
+                  ? nextFocusDuration
+                  : nextBreakDuration) * 60
               : prev.timeLeft,
         };
       });
@@ -325,6 +581,8 @@ export function usePomodoro() {
     updateSettings,
     requestNotificationPermission,
     playCompletionSound,
+    previewSound,
+    stopPreviewSound,
     startTenSecondTest,
   };
 }

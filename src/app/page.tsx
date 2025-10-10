@@ -21,6 +21,8 @@ export default function Home() {
     requestNotificationPermission,
     playCompletionSound,
     startTenSecondTest,
+    previewSound,
+    stopPreviewSound,
   } = usePomodoro();
 
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -165,6 +167,8 @@ export default function Home() {
         onOpenChange={setSettingsOpen}
         settings={settings}
         onSave={updateSettings}
+        onPreviewSound={previewSound}
+        onStopPreview={stopPreviewSound}
       />
 
       {/* 푸터 */}
