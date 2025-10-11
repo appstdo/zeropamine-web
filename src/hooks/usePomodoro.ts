@@ -17,7 +17,7 @@ const DEFAULT_SETTINGS: PomodoroSettings = {
   focusDuration: 25,
   breakDuration: 5,
   autoStart: false,
-  theme: "hourglass",
+  theme: "coffee",
   soundType: "alarm",
   volume: 1,
 };

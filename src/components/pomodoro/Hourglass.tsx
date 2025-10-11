@@ -35,7 +35,7 @@ export function Hourglass({ mode, progress }: HourglassProps) {
 
   return (
     <div
-      className="relative w-56 h-72 sm:w-64 sm:h-80 md:w-64 md:h-80 flex items-center justify-center mt-10"
+      className="relative w-56 h-72 sm:w-64 sm:h-80 md:w-64 md:h-80 flex items-center justify-center"
       aria-label="모래시계"
     >
       {/* 모래시계 테두리 */}

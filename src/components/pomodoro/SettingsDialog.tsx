@@ -17,8 +17,8 @@ import { Hourglass } from "./Hourglass";
 
 const themeOptions: Array<{ value: PomodoroSettings["theme"]; label: string }> =
   [
-    { value: "hourglass", label: "모래시계" },
     { value: "coffee", label: "커피 머그" },
+    { value: "hourglass", label: "모래시계" },
   ];
 
 const soundOptions: Array<{
