@@ -100,7 +100,9 @@ export default function RootLayout({
         </Script>
         {children}
       </body>
-      <GoogleAnalytics gaId={process.env.GA_ID as string} />
+      <GoogleAnalytics
+        gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string}
+      />
     </html>
   );
 }
