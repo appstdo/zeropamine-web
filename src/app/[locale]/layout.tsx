@@ -83,9 +83,11 @@ export async function generateMetadata({
 export default async function LocaleLayout({
   children,
   params,
-}: LayoutProps<"/[locale]">) {
-  const resolvedParams = (await params) as LocaleParams;
-  const locale = resolvedParams.locale as Locale;
+}: {
+  children: React.ReactNode;
+  params: Params;
+}) {
+  const locale = params.locale;
   if (!locales.includes(locale)) {
     notFound();
   }
