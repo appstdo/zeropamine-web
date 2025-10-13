@@ -1,8 +1,12 @@
-import type { LayoutProps, Metadata } from "next";
+import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/siteConfig";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
@@ -11,15 +15,16 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-type LocaleParams = Awaited<LayoutProps<"/[locale]">["params"]>;
+// ✅ params 타입을 직접 정의
+type Params = { locale: Locale };
 
+// 메타데이터
 export async function generateMetadata({
   params,
 }: {
-  params: LayoutProps<"/[locale]">["params"];
+  params: Params;
 }): Promise<Metadata> {
-  const resolvedParams = (await params) as LocaleParams;
-  const locale = resolvedParams.locale as Locale;
+  const locale = params.locale;
   if (!locales.includes(locale)) {
     notFound();
   }
@@ -27,10 +32,10 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "seo" });
   const keywordList = t("keywords")
     .split(",")
-    .map((keyword) => keyword.trim())
+    .map((k) => k.trim())
     .filter(Boolean);
 
-  const canonical = locale === defaultLocale ? "/" : `/${locale as string}`;
+  const canonical = locale === defaultLocale ? "/" : `/${locale}`;
 
   return {
     metadataBase: new URL(siteUrl),
