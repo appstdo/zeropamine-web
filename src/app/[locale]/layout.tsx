@@ -1,13 +1,8 @@
-import type { ReactNode } from "react";
-import type { Metadata } from "next";
+import type { LayoutProps, Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
-import {
-  getMessages,
-  getTranslations,
-  setRequestLocale,
-} from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/siteConfig";
 import { defaultLocale, locales, type Locale } from "@/i18n/routing";
@@ -16,14 +11,15 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-type GenerateMetadataParams = {
-  params: { locale: string };
-};
+type LocaleParams = Awaited<LayoutProps<"/[locale]">["params"]>;
 
 export async function generateMetadata({
   params,
-}: GenerateMetadataParams): Promise<Metadata> {
-  const locale = params.locale as Locale;
+}: {
+  params: LayoutProps<"/[locale]">["params"];
+}): Promise<Metadata> {
+  const resolvedParams = (await params) as LocaleParams;
+  const locale = resolvedParams.locale as Locale;
   if (!locales.includes(locale)) {
     notFound();
   }
@@ -82,11 +78,9 @@ export async function generateMetadata({
 export default async function LocaleLayout({
   children,
   params,
-}: {
-  children: ReactNode;
-  params: { locale: string };
-}) {
-  const locale = params.locale as Locale;
+}: LayoutProps<"/[locale]">) {
+  const resolvedParams = (await params) as LocaleParams;
+  const locale = resolvedParams.locale as Locale;
   if (!locales.includes(locale)) {
     notFound();
   }

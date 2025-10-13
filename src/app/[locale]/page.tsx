@@ -73,7 +73,7 @@ export default function Home() {
           </h1>
         </header>
 
-        {notificationPermission === "default" && (
+        {/* {notificationPermission === "default" && (
           <div className="absolute top-16 sm:top-20 left-4 right-4 sm:left-auto sm:right-auto sm:mx-auto max-w-md px-2 sm:px-6">
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 sm:p-4 flex items-center gap-2 sm:gap-3">
               <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 flex-shrink-0" />
@@ -91,7 +91,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-12 max-w-2xl w-full mt-16 sm:mt-16">
           <PomodoroVisualizer
