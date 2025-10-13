@@ -1,0 +1,35 @@
+{
+  "title": {
+    "default": "제로파민 - 집중력을 위한 뽀모도로 타이머",
+    "template": "{title} | zeropamine"
+  },
+  "description": "zeropamine은 모래시계와 커피 테마 비주얼을 제공하는 뽀모도로 타이머로, 집중 시간과 휴식 시간을 손쉽게 관리할 수 있도록 도와줍니다.",
+  "keywords": "뽀모도로, pomodoro timer, 집중력 향상, 생산성, 타이머, zeropamine",
+  "openGraph": {
+    "title": "zeropamine - 집중력을 위한 뽀모도로 타이머",
+    "description": "모래시계 애니메이션과 함께 집중과 휴식을 관리하세요. zeropamine은 생산성을 높여주는 뽀모도로 타이머입니다.",
+    "siteName": "zeropamine",
+    "locale": "ko_KR",
+    "type": "website"
+  },
+  "twitter": {
+    "title": "zeropamine - 집중력을 위한 뽀모도로 타이머",
+    "description": "zeropamine은 집중력 향상을 위한 모던한 뽀모도로 타이머입니다.",
+    "site": "@zeropamine",
+    "card": "summary"
+  },
+  "jsonLd": {
+    "name": "zeropamine Pomodoro Timer",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Web",
+    "description": "zeropamine은 모래시계 애니메이션과 커피 테마를 제공하는 뽀모도로 타이머로, 집중과 휴식 주기를 스마트하게 관리할 수 있습니다.",
+    "price": "0",
+    "priceCurrency": "KRW",
+    "inLanguage": "ko"
+  },
+  "appleWebApp": {
+    "title": "Zeropamine",
+    "statusBarStyle": "black-translucent"
+  },
+  "themeColor": "#374151"
+}

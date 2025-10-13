@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import type { TimerMode } from "@/types/pomodoro";
 
 interface CoffeeMugProps {
@@ -13,6 +14,7 @@ const FILL_BOTTOM_Y = 214;
 const MAX_FILL_HEIGHT = FILL_BOTTOM_Y - FILL_TOP_Y;
 
 export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
+  const t = useTranslations("pomodoro.aria");
   const { fillHeight, fillColor, fillOpacity } = useMemo(() => {
     const fillProgress = mode === "focus" ? progress : 1 - progress;
     const height = Math.max(0, Math.min(1, fillProgress)) * MAX_FILL_HEIGHT;
@@ -28,11 +30,11 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
   return (
     <div
       className="relative w-80 h-96 sm:w-80 sm:h-96 md:w-80 md:h-106 flex items-center justify-center"
-      aria-label="커피 머그잔"
+      aria-label={t("coffeeMug")}
     >
       <svg
         className="absolute inset-0 w-full h-full z-10"
-        viewBox="0 0 192 256"
+        viewBox="0 20 192 256"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid meet"
@@ -57,7 +59,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
 
       <svg
         className="absolute inset-0 w-full h-full"
-        viewBox="0 0 192 256"
+        viewBox="0 20 192 256"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid meet"

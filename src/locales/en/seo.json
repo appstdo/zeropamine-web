@@ -1,0 +1,35 @@
+{
+  "title": {
+    "default": "zeropamine - Pomodoro timer for deep focus",
+    "template": "{title} | zeropamine"
+  },
+  "description": "zeropamine is a pomodoro timer with hourglass and coffee-themed visuals that helps you balance focus and break sessions with ease.",
+  "keywords": "pomodoro, pomodoro timer, focus, productivity, timer, zeropamine",
+  "openGraph": {
+    "title": "zeropamine - Pomodoro timer for deep focus",
+    "description": "Stay on top of every session with animated visuals. zeropamine keeps your focus and break routine simple.",
+    "siteName": "zeropamine",
+    "locale": "en_US",
+    "type": "website"
+  },
+  "twitter": {
+    "title": "zeropamine - Pomodoro timer for deep focus",
+    "description": "zeropamine is a modern pomodoro timer designed to help you stay in flow.",
+    "site": "@zeropamine",
+    "card": "summary"
+  },
+  "jsonLd": {
+    "name": "zeropamine Pomodoro Timer",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Web",
+    "description": "zeropamine offers animated hourglass and coffee themes so you can manage focus and break cycles effortlessly.",
+    "price": "0",
+    "priceCurrency": "USD",
+    "inLanguage": "en"
+  },
+  "appleWebApp": {
+    "title": "Zeropamine",
+    "statusBarStyle": "black-translucent"
+  },
+  "themeColor": "#374151"
+}

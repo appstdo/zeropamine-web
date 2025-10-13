@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import type { TimerMode } from "@/types/pomodoro";
 
 interface TimerProps {
@@ -9,6 +10,7 @@ interface TimerProps {
 }
 
 export function Timer({ mode, timeLeft }: TimerProps) {
+  const t = useTranslations("pomodoro.timer");
   const { minutes, seconds } = useMemo(() => {
     const m = Math.floor(timeLeft / 60);
     const s = timeLeft % 60;
@@ -18,7 +20,8 @@ export function Timer({ mode, timeLeft }: TimerProps) {
     };
   }, [timeLeft]);
 
-  const modeLabel = mode === "focus" ? "집중" : "휴식";
+  const modeLabel = mode === "focus" ? t("focus") : t("break");
+  const heading = t("heading", { mode: modeLabel });
   const modeColor = mode === "focus" ? "text-blue-400" : "text-green-400";
 
   return (
@@ -30,7 +33,7 @@ export function Timer({ mode, timeLeft }: TimerProps) {
       <h2
         className={`text-lg sm:text-xl md:text-2xl font-bold ${modeColor} transition-colors`}
       >
-        {modeLabel} 시간
+        {heading}
       </h2>
       <div className="text-5xl sm:text-6xl md:text-7xl font-mono font-bold text-white tracking-wider tabular-nums">
         {minutes}:{seconds}

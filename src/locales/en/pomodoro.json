@@ -1,0 +1,97 @@
+{
+  "aria": {
+    "coffeeMug": "Coffee mug timer visualization",
+    "hourglass": "Hourglass timer visualization"
+  },
+  "theme": {
+    "coffee": "Coffee Mug",
+    "hourglass": "Hourglass"
+  },
+  "sound": {
+    "alarm": {
+      "label": "Alarm",
+      "description": "Metallic alarm tone"
+    },
+    "bell": {
+      "label": "Bell",
+      "description": "Bright bell chime"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Adjust your pomodoro timer preferences.",
+    "focusDuration": {
+      "label": "Focus duration (minutes)"
+    },
+    "breakDuration": {
+      "label": "Break duration (minutes)"
+    },
+    "autoStart": {
+      "label": "Auto start",
+      "hint": "Automatically switch between focus and break sessions."
+    },
+    "theme": {
+      "label": "Theme"
+    },
+    "sound": {
+      "label": "Notification sound"
+    },
+    "volume": {
+      "label": "Volume",
+      "hint": "Works independently from the system volume."
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  },
+  "controls": {
+    "start": "Start",
+    "resume": "Resume",
+    "pause": "Pause",
+    "reset": "Reset",
+    "settings": "Settings",
+    "aria": {
+      "start": "Start timer",
+      "resume": "Resume timer",
+      "pause": "Pause timer",
+      "reset": "Reset timer",
+      "settings": "Open settings"
+    }
+  },
+  "timer": {
+    "focus": "Focus",
+    "break": "Break",
+    "heading": "{mode} Time"
+  },
+  "notifications": {
+    "title": "Zeropamine",
+    "focusReady": "Break finished. Time to focus!",
+    "breakReady": "Focus session done. Take a break!"
+  },
+  "page": {
+    "headline": "zeropamine",
+    "sectionTitle": "Design your focus routine with a pomodoro timer",
+    "description": "zeropamine helps you stay in flow with a digital pomodoro timer inspired by classic focus and rest cycles. A playful interface and animation make it easy to stay immersed while studying, coding, or working.",
+    "list": {
+      "customize": "Customize focus and break durations to build your own routine",
+      "visual": "Visual themes and progress animations make the remaining time intuitive"
+    },
+    "cta": "Start planning your day with the zeropamine pomodoro timer and follow through on every goal.",
+    "progress": {
+      "ariaLabel": "Timer progress",
+      "ariaValue": "Progress {value}%"
+    },
+    "debug": {
+      "sound": "Debug: Sound test",
+      "tenSeconds": "Debug: 10-second test"
+    },
+    "notifications": {
+      "title": "Enable notifications",
+      "description": "Would you like to receive alerts when a session ends?",
+      "allow": "Allow"
+    },
+    "currentSettings": "Focus {focus} min · Break {break} min{autoStart, select, true { · Auto start} other {}}",
+    "footer": "Pomodoro timer for focus"
+  }
+}

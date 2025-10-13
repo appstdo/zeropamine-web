@@ -1,6 +1,7 @@
 "use client";
 
 import { Play, Pause, RotateCcw, Settings as SettingsIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { TimerStatus } from "@/types/pomodoro";
 
@@ -19,6 +20,13 @@ export function Controls({
   onReset,
   onSettings,
 }: ControlsProps) {
+  const t = useTranslations("pomodoro.controls");
+
+  const startLabel =
+    status === "paused" ? t("resume") : t("start");
+  const startAria =
+    status === "paused" ? t("aria.resume") : t("aria.start");
+
   return (
     <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 md:gap-4 w-full sm:w-auto px-4 sm:px-0">
       {status === "running" ? (
@@ -26,20 +34,20 @@ export function Controls({
           onClick={onPause}
           size="lg"
           className="gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 w-full sm:w-auto text-sm sm:text-base"
-          aria-label="일시정지"
+          aria-label={t("aria.pause")}
         >
           <Pause className="w-4 h-4 sm:w-5 sm:h-5" />
-          일시정지
+          {t("pause")}
         </Button>
       ) : (
         <Button
           onClick={onStart}
           size="lg"
           className="gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 w-full sm:w-auto text-sm sm:text-base"
-          aria-label={status === "paused" ? "재개" : "시작"}
+          aria-label={startAria}
         >
           <Play className="w-4 h-4 sm:w-5 sm:h-5" />
-          {status === "paused" ? "재개" : "시작"}
+          {startLabel}
         </Button>
       )}
 
@@ -49,10 +57,10 @@ export function Controls({
           size="lg"
           variant="outline"
           className="gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 flex-1 sm:flex-none text-sm sm:text-base"
-          aria-label="리셋"
+          aria-label={t("aria.reset")}
         >
           <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="hidden sm:inline">리셋</span>
+          <span className="hidden sm:inline">{t("reset")}</span>
         </Button>
 
         <Button
@@ -60,10 +68,10 @@ export function Controls({
           size="lg"
           variant="outline"
           className="gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 flex-1 sm:flex-none text-sm sm:text-base"
-          aria-label="설정"
+          aria-label={t("aria.settings")}
         >
           <SettingsIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="hidden sm:inline">설정</span>
+          <span className="hidden sm:inline">{t("settings")}</span>
         </Button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useEffect, useCallback, useRef } from "react";
 import type {
   PomodoroSettings,
@@ -32,6 +33,7 @@ const INITIAL_STATE: PomodoroState = {
 };
 
 export function usePomodoro() {
+  const tNotifications = useTranslations("pomodoro.notifications");
   const [state, setState] = useState<PomodoroState>(INITIAL_STATE);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -454,11 +456,11 @@ export function usePomodoro() {
             // 알림 (옵션)
             if (typeof window !== "undefined" && "Notification" in window) {
               if (Notification.permission === "granted") {
-                new Notification("Zeropamine", {
+                new Notification(tNotifications("title"), {
                   body:
                     nextMode === "focus"
-                      ? "휴식이 끝났습니다. 집중 시간입니다!"
-                      : "집중 시간이 끝났습니다. 휴식하세요!",
+                      ? tNotifications("focusReady")
+                      : tNotifications("breakReady"),
                   icon: "/favicon.ico",
                 });
               }
@@ -490,7 +492,7 @@ export function usePomodoro() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [state.status, playCompletionSound]);
+  }, [state.status, playCompletionSound, tNotifications]);
 
   // 시작/재개
   const start = useCallback(() => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import type { TimerMode } from "@/types/pomodoro";
 
 const MAX_SAND_HEIGHT = 110;
@@ -13,6 +14,7 @@ interface HourglassProps {
 }
 
 export function Hourglass({ mode, progress }: HourglassProps) {
+  const t = useTranslations("pomodoro.aria");
   // 모래 높이 계산 (clipPath 높이와 정확히 일치)
   const { topSandHeight, bottomSandHeight } = useMemo(() => {
     if (mode === "focus") {
@@ -36,7 +38,7 @@ export function Hourglass({ mode, progress }: HourglassProps) {
   return (
     <div
       className="relative w-56 h-72 sm:w-64 sm:h-80 md:w-64 md:h-80 flex items-center justify-center"
-      aria-label="모래시계"
+      aria-label={t("hourglass")}
     >
       {/* 모래시계 테두리 */}
       <svg

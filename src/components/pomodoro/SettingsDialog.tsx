@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -15,38 +16,31 @@ import type { PomodoroSettings, TimerMode } from "@/types/pomodoro";
 import { CoffeeMug } from "./CoffeeMug";
 import { Hourglass } from "./Hourglass";
 
-const themeOptions: Array<{ value: PomodoroSettings["theme"]; label: string }> =
-  [
-    { value: "coffee", label: "커피 머그" },
-    { value: "hourglass", label: "모래시계" },
-  ];
-
-const soundOptions: Array<{
-  value: PomodoroSettings["soundType"];
-  label: string;
-  description: string;
-}> = [
-  { value: "alarm", label: "자명종", description: "금속성 알람" },
-  { value: "bell", label: "벨", description: "밝은 종소리" },
+const PREVIEW_MODE_SEQUENCE: TimerMode[] = [
+  "focus",
+  "focus",
+  "break",
+  "break",
 ];
+
+const PREVIEW_PROGRESS_SEQUENCE = [1, 0, 1, 0] as const;
 
 function ThemePreview({ theme }: { theme: PomodoroSettings["theme"] }) {
   const [step, setStep] = useState(0);
-  const modeSequence: TimerMode[] = ["focus", "focus", "break", "break"];
-  const progressSequence = [1, 0, 1, 0] as const;
+  const totalSteps = PREVIEW_MODE_SEQUENCE.length;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStep((prev) => (prev + 1) % modeSequence.length);
+      setStep((prev) => (prev + 1) % totalSteps);
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [totalSteps]);
 
-  const previewMode = modeSequence[step];
-  const previewProgress = progressSequence[step];
+  const previewMode = PREVIEW_MODE_SEQUENCE[step];
+  const previewProgress = PREVIEW_PROGRESS_SEQUENCE[step];
 
   return (
     <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center overflow-hidden">
@@ -83,6 +77,10 @@ export function SettingsDialog({
   onPreviewSound,
   onStopPreview,
 }: SettingsDialogProps) {
+  const tSettings = useTranslations("pomodoro.settings");
+  const tTheme = useTranslations("pomodoro.theme");
+  const tSound = useTranslations("pomodoro.sound");
+
   const [focusDuration, setFocusDuration] = useState(settings.focusDuration);
   const [breakDuration, setBreakDuration] = useState(settings.breakDuration);
   const [autoStart, setAutoStart] = useState(settings.autoStart);
@@ -146,16 +144,18 @@ export function SettingsDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="w-[calc(100%-2rem)] max-w-md sm:max-w-md bg-gray-800 text-white border-gray-700 max-h-[85vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle className="text-xl sm:text-2xl">설정</DialogTitle>
+          <DialogTitle className="text-xl sm:text-2xl">
+            {tSettings("title")}
+          </DialogTitle>
           <DialogDescription className="text-sm text-gray-400">
-            뽀모도로 타이머 설정을 변경하세요.
+            {tSettings("description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 sm:space-y-6 py-3 sm:py-4 overflow-y-auto pr-1">
           <div className="space-y-2">
             <label htmlFor="focus-duration" className="text-sm font-medium">
-              집중 시간 (분)
+              {tSettings("focusDuration.label")}
             </label>
             <Input
               id="focus-duration"
@@ -170,7 +170,7 @@ export function SettingsDialog({
 
           <div className="space-y-2">
             <label htmlFor="break-duration" className="text-sm font-medium">
-              휴식 시간 (분)
+              {tSettings("breakDuration.label")}
             </label>
             <Input
               id="break-duration"
@@ -185,7 +185,7 @@ export function SettingsDialog({
 
           <div className="flex items-center justify-between">
             <label htmlFor="auto-start" className="text-sm font-medium">
-              자동 시작
+              {tSettings("autoStart.label")}
             </label>
             <Switch
               id="auto-start"
@@ -195,13 +195,16 @@ export function SettingsDialog({
           </div>
 
           <p className="text-xs text-gray-500">
-            자동 시작을 활성화하면 집중/휴식 시간이 자동으로 전환됩니다.
+            {tSettings("autoStart.hint")}
           </p>
 
           <div className="space-y-2 pt-2">
-            <p className="text-sm font-medium">테마</p>
+            <p className="text-sm font-medium">
+              {tSettings("theme.label")}
+            </p>
             <div className="grid grid-cols-2 gap-2">
-              {themeOptions.map(({ value, label }) => {
+              {(["coffee", "hourglass"] as const).map((value) => {
+                const label = tTheme(value);
                 const isActive = theme === value;
                 return (
                   <button
@@ -224,9 +227,13 @@ export function SettingsDialog({
           </div>
 
           <div className="space-y-2 pt-2">
-            <p className="text-sm font-medium">알림 사운드</p>
+            <p className="text-sm font-medium">
+              {tSettings("sound.label")}
+            </p>
             <div className="grid grid-cols-2 gap-2">
-              {soundOptions.map(({ value, label, description }) => {
+              {(["alarm", "bell"] as const).map((value) => {
+                const label = tSound(`${value}.label`);
+                const description = tSound(`${value}.description`);
                 const isActive = soundType === value;
                 return (
                   <button
@@ -250,7 +257,7 @@ export function SettingsDialog({
 
           <div className="space-y-2">
             <label htmlFor="volume" className="text-sm font-medium">
-              볼륨
+              {tSettings("volume.label")}
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -270,7 +277,7 @@ export function SettingsDialog({
               </span>
             </div>
             <p className="text-xs text-gray-500">
-              시스템 볼륨과 별도로 동작합니다.
+              {tSettings("volume.hint")}
             </p>
           </div>
         </div>
@@ -281,13 +288,13 @@ export function SettingsDialog({
             variant="outline"
             className="flex-1 bg-white/10 hover:bg-white/20 text-white border-white/20 text-sm sm:text-base h-10 sm:h-11"
           >
-            취소
+            {tSettings("actions.cancel")}
           </Button>
           <Button
             onClick={handleSave}
             className="flex-1 bg-white/20 hover:bg-white/30 text-white text-sm sm:text-base h-10 sm:h-11"
           >
-            저장
+            {tSettings("actions.save")}
           </Button>
         </div>
       </DialogContent>
