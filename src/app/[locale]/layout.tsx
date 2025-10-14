@@ -50,15 +50,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     description: t("description"),
     keywords: keywordList,
-    themeColor: t("themeColor"),
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 5,
-      userScalable: true,
-    },
     openGraph: {
-      // type: t("openGraph.type"),
+      type: "website",
       locale: t("openGraph.locale"),
       url: siteUrl,
       siteName: t("openGraph.siteName"),
@@ -66,14 +59,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t("openGraph.description"),
     },
     twitter: {
-      // card: t("twitter.card"),
+      card: "summary",
       site: t("twitter.site"),
       title: t("twitter.title"),
       description: t("twitter.description"),
     },
     appleWebApp: {
       capable: true,
-      // statusBarStyle: t("appleWebApp.statusBarStyle"),
+      statusBarStyle: "black-translucent",
       title: t("appleWebApp.title"),
     },
   };

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { getLocale } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Viewport } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  userScalable: false,
+  themeColor: "black",
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -20,8 +27,10 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
 
+  console.log("locale!!", locale);
+
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

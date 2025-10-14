@@ -8,6 +8,7 @@ import type {
   TimerMode,
   TimerStatus,
 } from "@/types/pomodoro";
+import { useScreenWakeLock } from "@/hooks/useScreenWakeLock";
 
 type TrackedAudioNode = {
   node: AudioNode;
@@ -35,6 +36,11 @@ const INITIAL_STATE: PomodoroState = {
 export function usePomodoro() {
   const tNotifications = useTranslations("pomodoro.notifications");
   const [state, setState] = useState<PomodoroState>(INITIAL_STATE);
+  const {
+    acquire: acquireWakeLock,
+    release: releaseWakeLock,
+    error: wakeLockError,
+  } = useScreenWakeLock();
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -431,6 +437,20 @@ export function usePomodoro() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.settings));
     }
   }, [state.settings]);
+
+  useEffect(() => {
+    if (state.status === "running") {
+      void acquireWakeLock();
+    } else {
+      void releaseWakeLock();
+    }
+  }, [state.status, acquireWakeLock, releaseWakeLock]);
+
+  useEffect(() => {
+    if (wakeLockError) {
+      console.warn("Wake lock error:", wakeLockError);
+    }
+  }, [wakeLockError]);
 
   // 타이머 로직
   useEffect(() => {

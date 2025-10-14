@@ -1,7 +1,7 @@
 {
   "title": {
     "default": "zeropamine - Pomodoro timer for deep focus",
-    "template": "{title} | zeropamine"
+    "template": "%s | zeropamine"
   },
   "description": "zeropamine is a pomodoro timer with hourglass and coffee-themed visuals that helps you balance focus and break sessions with ease.",
   "keywords": "pomodoro, pomodoro timer, focus, productivity, timer, zeropamine",
