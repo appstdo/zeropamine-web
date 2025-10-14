@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
-import { NextIntlClientProvider } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
   getTranslations,
@@ -9,23 +9,22 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { siteUrl } from "@/lib/siteConfig";
-import { defaultLocale, locales, type Locale } from "@/i18n/routing";
+import { defaultLocale, locales } from "@/i18n/routing";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-// ✅ params 타입을 직접 정의
-type Params = { locale: Locale };
+type Props = {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+};
 
 // 메타데이터
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
-  const locale = params.locale;
-  if (!locales.includes(locale)) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!hasLocale(locales, locale)) {
     notFound();
   }
 
@@ -80,15 +79,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: Params;
-}) {
-  const locale = params.locale;
-  if (!locales.includes(locale)) {
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+  if (!hasLocale(locales, locale)) {
     notFound();
   }
 
