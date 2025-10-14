@@ -16,12 +16,7 @@ import type { PomodoroSettings, TimerMode } from "@/types/pomodoro";
 import { CoffeeMug } from "./CoffeeMug";
 import { Hourglass } from "./Hourglass";
 
-const PREVIEW_MODE_SEQUENCE: TimerMode[] = [
-  "focus",
-  "focus",
-  "break",
-  "break",
-];
+const PREVIEW_MODE_SEQUENCE: TimerMode[] = ["focus", "focus", "break", "break"];
 
 const PREVIEW_PROGRESS_SEQUENCE = [1, 0, 1, 0] as const;
 
@@ -163,6 +158,7 @@ export function SettingsDialog({
               min="1"
               max="120"
               value={focusDuration}
+              autoFocus={false}
               onChange={(e) => setFocusDuration(parseInt(e.target.value) || 1)}
               className="bg-gray-900 border-gray-700 text-white h-10 sm:h-11"
             />
@@ -194,14 +190,10 @@ export function SettingsDialog({
             />
           </div>
 
-          <p className="text-xs text-gray-500">
-            {tSettings("autoStart.hint")}
-          </p>
+          <p className="text-xs text-gray-500">{tSettings("autoStart.hint")}</p>
 
           <div className="space-y-2 pt-2">
-            <p className="text-sm font-medium">
-              {tSettings("theme.label")}
-            </p>
+            <p className="text-sm font-medium">{tSettings("theme.label")}</p>
             <div className="grid grid-cols-2 gap-2">
               {(["coffee", "hourglass"] as const).map((value) => {
                 const label = tTheme(value);
@@ -227,9 +219,7 @@ export function SettingsDialog({
           </div>
 
           <div className="space-y-2 pt-2">
-            <p className="text-sm font-medium">
-              {tSettings("sound.label")}
-            </p>
+            <p className="text-sm font-medium">{tSettings("sound.label")}</p>
             <div className="grid grid-cols-2 gap-2">
               {(["alarm", "bell"] as const).map((value) => {
                 const label = tSound(`${value}.label`);
@@ -276,9 +266,7 @@ export function SettingsDialog({
                 {Math.round(volume * 100)}%
               </span>
             </div>
-            <p className="text-xs text-gray-500">
-              {tSettings("volume.hint")}
-            </p>
+            <p className="text-xs text-gray-500">{tSettings("volume.hint")}</p>
           </div>
         </div>
 

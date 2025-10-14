@@ -27,8 +27,6 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
 
-  console.log("locale!!", locale);
-
   return (
     <html lang={locale} suppressHydrationWarning className="dark">
       <body

@@ -29,7 +29,7 @@ export function CoffeeMug({ mode, progress }: CoffeeMugProps) {
 
   return (
     <div
-      className="relative w-80 h-96 sm:w-80 sm:h-96 md:w-80 md:h-106 flex items-center justify-center"
+      className="relative w-56 h-72 sm:w-72 sm:h-80 md:w-72 md:h-80 flex items-center justify-center scale-125"
       aria-label={t("coffeeMug")}
     >
       <svg

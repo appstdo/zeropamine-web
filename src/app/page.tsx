@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
-import { defaultLocale } from "@/i18n/routing";
+import { getLocale } from "next-intl/server";
 
-export default function Root() {
-  redirect(`/${defaultLocale}`); // as-needed 철학과는 살짝 어긋나지만 실용적
+export default async function Root() {
+  const locale = await getLocale();
+  redirect(`/${locale}`); // as-needed 철학과는 살짝 어긋나지만 실용적
 }

@@ -10,6 +10,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "daily",
       priority: 1,
+      alternates: {
+        languages: {
+          en: "https://zeropamine.com/en",
+          ko: "https://zeropamine.com/ko",
+        },
+      },
     },
   ];
 
