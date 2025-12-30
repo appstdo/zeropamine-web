@@ -1,5 +1,9 @@
 {
   "brand": {
     "name": "zeropamine"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   }
 }

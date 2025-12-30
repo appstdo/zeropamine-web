@@ -8,6 +8,7 @@ import { Timer } from "@/components/pomodoro/Timer";
 import { Controls } from "@/components/pomodoro/Controls";
 import { SettingsDialog } from "@/components/pomodoro/SettingsDialog";
 import { usePomodoro } from "@/hooks/usePomodoro";
+import { Link } from "@/i18n/routing";
 
 export default function Home() {
   const {
@@ -27,6 +28,7 @@ export default function Home() {
   } = usePomodoro();
 
   const tPage = useTranslations("pomodoro.page");
+  const tCommon = useTranslations("common");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notificationPermission, setNotificationPermission] =
     useState<NotificationPermission>("default");
@@ -178,6 +180,15 @@ export default function Home() {
 
           <footer className="pt-6 text-center text-gray-500 text-xs sm:text-sm">
             <p>{tPage("footer")}</p>
+            <div className="mt-2 space-x-2 sm:space-x-4">
+              <Link href="/privacy" className="hover:underline">
+                {tCommon("footer.privacy")}
+              </Link>
+              <span className="text-gray-400">•</span>
+              <Link href="/terms" className="hover:underline">
+                {tCommon("footer.terms")}
+              </Link>
+            </div>
           </footer>
         </div>
       </section>

@@ -1,5 +1,9 @@
 {
   "brand": {
     "name": "zeropamine"
+  },
+  "footer": {
+    "privacy": "개인정보 처리방침",
+    "terms": "이용약관"
   }
 }
