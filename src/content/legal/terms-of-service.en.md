@@ -1,48 +1,20 @@
 # ZeroPamine Terms of Service
 
-**Last Updated**: December 30, 2025
+**Last Updated**: January 5, 2026
 
 ## Table of Contents
 
-- [ZeroPamine Terms of Service](#zeropamine-terms-of-service)
-  - [Table of Contents](#table-of-contents)
-  - [1. Introduction to the Service](#1-introduction-to-the-service)
-    - [Key Features](#key-features)
-  - [2. Acceptance and Modification of Terms](#2-acceptance-and-modification-of-terms)
-    - [2.1 Acceptance of Terms](#21-acceptance-of-terms)
-    - [2.2 Modification of Terms](#22-modification-of-terms)
-  - [3. Account and Registration](#3-account-and-registration)
-    - [3.1 Account Creation](#31-account-creation)
-    - [3.2 User Responsibilities](#32-user-responsibilities)
-    - [3.3 Accurate Information](#33-accurate-information)
-  - [4. Use of Service](#4-use-of-service)
-    - [4.1 Free Features](#41-free-features)
-    - [4.2 Pro Features](#42-pro-features)
-    - [4.3 Prohibited Conduct](#43-prohibited-conduct)
-  - [5. Payment (ZeroPamine Pro)](#5-payment-zeropamine-pro)
-    - [5.1 Payment Method](#51-payment-method)
-    - [5.2 Lifetime Access](#52-lifetime-access)
-    - [5.3 Pricing and Payment](#53-pricing-and-payment)
-    - [5.4 Refund Policy](#54-refund-policy)
-    - [5.5 Restore Purchase](#55-restore-purchase)
-  - [6. Intellectual Property Rights](#6-intellectual-property-rights)
-    - [6.1 Ownership of Service](#61-ownership-of-service)
-    - [6.2 User License](#62-user-license)
-    - [6.3 User-Generated Content](#63-user-generated-content)
-  - [7. Disclaimers and Limitation of Liability](#7-disclaimers-and-limitation-of-liability)
-    - [7.1 Service Provision](#71-service-provision)
-    - [7.2 Limitation of Liability](#72-limitation-of-liability)
-    - [7.3 Third-Party Services](#73-third-party-services)
-  - [8. Service Interruption and Modification](#8-service-interruption-and-modification)
-    - [8.1 Right to Modify Service](#81-right-to-modify-service)
-    - [8.2 Maintenance](#82-maintenance)
-  - [9. Account Termination](#9-account-termination)
-    - [9.1 Termination by User](#91-termination-by-user)
-    - [9.2 Termination by Operator](#92-termination-by-operator)
-  - [10. Governing Law and Dispute Resolution](#10-governing-law-and-dispute-resolution)
-    - [10.1 Governing Law](#101-governing-law)
-    - [10.2 Dispute Resolution](#102-dispute-resolution)
-  - [11. Contact Information](#11-contact-information)
+1. [Introduction to the Service](#1-introduction-to-the-service)
+2. [Acceptance and Modification of Terms](#2-acceptance-and-modification-of-terms)
+3. [Account and Registration](#3-account-and-registration)
+4. [Use of Service](#4-use-of-service)
+5. [Subscription and Payment (ZeroPamine Pro)](#5-subscription-and-payment-zeropamine-pro)
+6. [Intellectual Property Rights](#6-intellectual-property-rights)
+7. [Disclaimers and Limitation of Liability](#7-disclaimers-and-limitation-of-liability)
+8. [Service Interruption and Modification](#8-service-interruption-and-modification)
+9. [Account Termination](#9-account-termination)
+10. [Governing Law and Dispute Resolution](#10-governing-law-and-dispute-resolution)
+11. [Contact Information](#11-contact-information)
 
 ---
 
@@ -61,7 +33,10 @@ The Service is operated by an individual developer, and users may use the Servic
 - Custom routine settings
 - Session history and statistics
 - Cloud synchronization (when account is created)
-- Two visual themes (Hourglass, Coffee Mug)
+- Multiple visual themes:
+  - **Free**: Coffee, Hourglass
+  - **Pro**: Candle, Battery, Cat, Nyancat (requires ZeroPamine Pro)
+  - **Special**: Campfire, Tree (individual purchase)
 
 ---
 
@@ -120,11 +95,19 @@ The following features are available to all users for free:
 
 Advertisements may be displayed to free users.
 
-### 4.2 Pro Features
+### 4.2 Premium Features
 
-ZeroPamine Pro purchasers receive the following additional benefits:
+**ZeroPamine Pro** (one-time purchase)
 
 - Ad-free experience
+- Access to Pro themes: Candle, Battery, Cat, Nyancat
+
+**Special Themes** (individual purchase)
+
+- Premium animated themes available for separate purchase
+- Currently available: Campfire, Tree
+- Each theme requires a separate one-time purchase
+- Purchase is linked to your account and synced across devices
 
 ### 4.3 Prohibited Conduct
 
@@ -141,7 +124,7 @@ Violations may result in account suspension or permanent deletion without prior 
 
 ---
 
-## 5. Payment (ZeroPamine Pro)
+## 5. Payment (ZeroPamine Pro and Special Themes)
 
 ### 5.1 Payment Method
 
@@ -172,11 +155,39 @@ Refunds are processed according to Apple and Google's refund policies:
 
 Refund requests must be made through the respective platform (App Store or Play Store).
 
+This policy applies to both ZeroPamine Pro and special theme purchases.
+
 ### 5.5 Restore Purchase
 
 - You can restore previous purchases through the "Restore Purchase" feature when changing devices or reinstalling
 - Only possible when logged in with the same Apple ID or Google account
 - Purchases cannot be transferred between accounts
+
+### 5.6 Special Theme Purchase
+
+**Purchase Method**
+
+- Special themes (Campfire, Tree, etc.) are sold as individual one-time purchases
+- Each theme must be purchased separately
+- Purchases are managed through RevenueCat
+
+**Pricing**
+
+- Each special theme has its own price
+- Prices are displayed within the app
+- Prices may vary by country and currency
+
+**Account Linking**
+
+- Special theme purchases are linked to your Firebase account
+- Purchases sync across all devices using the same account
+- Purchases cannot be transferred between different accounts
+
+**Restore Purchase**
+
+- Use "Restore Purchases" to restore special themes on new devices
+- Must be logged in with the same Firebase account
+- Note: RevenueCat restore behavior is set to "Block" to prevent abuse
 
 ---
 

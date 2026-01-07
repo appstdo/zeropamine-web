@@ -1,6 +1,6 @@
 # ZeroPamine Privacy Policy
 
-**Last Updated**: December 30, 2025
+**Last Updated**: January 5, 2026
 
 ## Table of Contents
 1. [Introduction](#1-introduction)
@@ -63,7 +63,7 @@ Information automatically collected while using the app:
 - Associated routine information
 
 **App Settings**
-- Selected theme (Hourglass/Coffee Mug)
+- Selected theme (Coffee, Hourglass, Candle, Battery, Cat, Nyancat, Campfire, Tree)
 - Auto-start settings
 - Sound enabled/disabled
 - Sound volume and type
@@ -74,7 +74,18 @@ Information automatically collected while using the app:
 - Routine names, durations, and order
 
 ### 2.3 Purchase Information
-Information collected for ZeroPamine Pro purchase:
+Information collected for ZeroPamine Pro and special theme purchases:
+
+**ZeroPamine Pro Purchase**
+- Purchase status (active/inactive)
+- Purchase date and time
+- Purchase platform (Apple/Google)
+- Product ID
+- RevenueCat customer ID
+- Last verification timestamp
+
+**Special Theme Purchases**
+- Purchased theme ID (Campfire, Tree, etc.)
 - Purchase status (active/inactive)
 - Purchase date and time
 - Purchase platform (Apple/Google)
@@ -136,8 +147,10 @@ Collected personal information is used only for the following purposes:
 
 ### 4.2 Payment Management
 - Processing ZeroPamine Pro purchases
+- Processing special theme individual purchases
 - Payment and refund processing
 - Providing purchase restoration feature
+- Managing theme unlock functionality
 
 ### 4.3 Advertising
 - Displaying personalized ads to non-Pro users (Google AdMob)
@@ -166,7 +179,7 @@ We share your personal information with third parties as follows:
 
 ### 5.1 Firebase (Google Cloud Platform)
 **Purpose**: Authentication, cloud database, analytics
-**Information Shared**: Account information, session records, settings, routines, device information
+**Information Shared**: Account information, session records, settings, routines, Pro status, special theme purchase information, device information
 **Retention Period**: Until account deletion (session records: 90 days)
 **Privacy Policy**: https://firebase.google.com/support/privacy
 
@@ -177,7 +190,7 @@ We share your personal information with third parties as follows:
 
 ### 5.2 RevenueCat
 **Purpose**: In-app purchase management and processing
-**Information Shared**: User UID, purchase information, purchase history
+**Information Shared**: User UID, Pro subscription information, special theme purchase information, purchase history
 **Retention Period**: Legal retention period (5 years per tax law)
 **Privacy Policy**: https://www.revenuecat.com/privacy
 
@@ -233,6 +246,7 @@ We may disclose personal information in accordance with legal obligations in the
 
 ### 6.4 Purchase Information
 - **Retention Period**: 5 years after purchase (legal requirement for tax purposes)
+- **Applies to**: ZeroPamine Pro purchase, special theme purchases (Campfire, Tree, etc.)
 
 ### 6.5 Local Data (Device Storage)
 - **Deletion**: Immediately deleted upon logout or app uninstall
@@ -260,6 +274,7 @@ Your personal information is processed through Google Cloud Platform (Firebase) 
 - Session records
 - Settings and routines
 - Subscription information
+- Special theme purchase information
 
 By using the Service, you are deemed to consent to the above international transfers.
 
@@ -417,4 +432,4 @@ If personal information disputes are not resolved, you may seek assistance from 
 
 ---
 
-This Privacy Policy is effective as of December 30, 2025.
+This Privacy Policy is effective as of January 5, 2026.
