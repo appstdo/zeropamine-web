@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { X } from "lucide-react";
 import { appStoreUrl } from "@/lib/siteConfig";
 
@@ -86,9 +87,13 @@ export function AppInstallBanner() {
       <div className="mx-2 mb-2 rounded-xl bg-white shadow-lg border border-gray-200">
         <div className="flex items-center gap-3 p-3">
           {/* 앱 아이콘 */}
-          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#20212E] flex items-center justify-center">
-            <span className="text-xl font-bold text-white">Z</span>
-          </div>
+          <Image
+            src="/appIcon.png"
+            alt="zeropamine"
+            width={48}
+            height={48}
+            className="flex-shrink-0 w-12 h-12 rounded-xl"
+          />
 
           {/* 텍스트 */}
           <div className="flex-1 min-w-0">
