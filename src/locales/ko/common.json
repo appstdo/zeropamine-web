@@ -6,5 +6,11 @@
     "privacy": "개인정보 처리방침",
     "terms": "이용약관",
     "contact": "문의하기"
+  },
+  "appBanner": {
+    "title": "zeropamine 앱",
+    "description": "더 나은 경험을 위해 앱을 설치하세요",
+    "install": "설치",
+    "close": "닫기"
   }
 }

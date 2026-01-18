@@ -6,5 +6,11 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "contact": "Contact"
+  },
+  "appBanner": {
+    "title": "zeropamine App",
+    "description": "Get the app for a better experience",
+    "install": "Install",
+    "close": "Close"
   }
 }

@@ -8,6 +8,7 @@ import { Timer } from "@/components/pomodoro/Timer";
 import { Controls } from "@/components/pomodoro/Controls";
 import { SettingsDialog } from "@/components/pomodoro/SettingsDialog";
 import { ContactDialog } from "@/components/contact/ContactDialog";
+import { AppInstallBanner } from "@/components/AppInstallBanner";
 import { usePomodoro } from "@/hooks/usePomodoro";
 import { Link } from "@/i18n/routing";
 
@@ -216,6 +217,8 @@ export default function Home() {
         open={contactOpen}
         onOpenChange={setContactOpen}
       />
+
+      <AppInstallBanner />
     </main>
   );
 }

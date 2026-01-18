@@ -6,5 +6,11 @@
     "privacy": "プライバシーポリシー",
     "terms": "利用規約",
     "contact": "お問い合わせ"
+  },
+  "appBanner": {
+    "title": "zeropamine アプリ",
+    "description": "アプリでより快適な体験を",
+    "install": "インストール",
+    "close": "閉じる"
   }
 }
