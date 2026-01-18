@@ -2,7 +2,7 @@
 
 import { useMemo, useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Bell } from "lucide-react";
+import Image from "next/image";
 import { PomodoroVisualizer } from "@/components/pomodoro/PomodoroVisualizer";
 import { Timer } from "@/components/pomodoro/Timer";
 import { Controls } from "@/components/pomodoro/Controls";
@@ -73,8 +73,15 @@ export default function Home() {
     <main className="bg-[#20212E] flex flex-col items-center">
       <section className="relative flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-8">
         <header className="absolute top-4 sm:top-8 left-0 right-0 flex justify-center px-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
-            {tPage("headline")}
+          <h1>
+            <Image
+              src="/logo.png"
+              alt={tPage("headline")}
+              width={180}
+              height={40}
+              className="h-8 sm:h-10 w-auto"
+              priority
+            />
           </h1>
         </header>
 
