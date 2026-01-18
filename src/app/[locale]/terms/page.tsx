@@ -34,26 +34,26 @@ export default async function TermsPage({ params }: TermsPageProps) {
   const t = await getTranslations({ locale, namespace: "common" });
 
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900">
+    <main className="min-h-screen bg-[#20212E]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Back to home link */}
         <Link
           href="/"
-          className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline mb-6 text-sm sm:text-base"
+          className="inline-flex items-center text-blue-400 hover:underline mb-6 text-sm sm:text-base"
         >
           ← {locale === "ko" ? "홈으로 돌아가기" : "Back to Home"}
         </Link>
 
         {/* Markdown content */}
-        <MarkdownRenderer content={content} />
+        <MarkdownRenderer content={content} darkMode />
 
         {/* Footer with links */}
-        <footer className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
+        <footer className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-400 text-xs sm:text-sm">
           <div className="space-x-4">
             <Link href="/privacy" className="hover:underline">
               {t("footer.privacy")}
             </Link>
-            <span className="text-gray-400 dark:text-gray-600">•</span>
+            <span className="text-gray-600">•</span>
             <Link href="/terms" className="hover:underline">
               {t("footer.terms")}
             </Link>

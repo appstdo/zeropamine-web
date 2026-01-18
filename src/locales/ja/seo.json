@@ -1,0 +1,35 @@
+{
+  "title": {
+    "default": "zeropamine - 集中力のためのポモドーロタイマー",
+    "template": "%s | zeropamine"
+  },
+  "description": "zeropamineは砂時計とコーヒーテーマのビジュアルを提供するポモドーロタイマーで、集中時間と休憩時間を簡単に管理できます。",
+  "keywords": "ポモドーロ, pomodoro timer, 集中力向上, 生産性, タイマー, zeropamine",
+  "openGraph": {
+    "title": "zeropamine - 集中力のためのポモドーロタイマー",
+    "description": "砂時計アニメーションで集中と休憩を管理しましょう。zeropamineは生産性を高めるポモドーロタイマーです。",
+    "siteName": "zeropamine",
+    "locale": "ja_JP",
+    "type": "website"
+  },
+  "twitter": {
+    "title": "zeropamine - 集中力のためのポモドーロタイマー",
+    "description": "zeropamineは集中力向上のためのモダンなポモドーロタイマーです。",
+    "site": "@zeropamine",
+    "card": "summary"
+  },
+  "jsonLd": {
+    "name": "zeropamine Pomodoro Timer",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Web",
+    "description": "zeropamineは砂時計アニメーションとコーヒーテーマを提供するポモドーロタイマーで、集中と休憩のサイクルをスマートに管理できます。",
+    "price": "0",
+    "priceCurrency": "JPY",
+    "inLanguage": "ja"
+  },
+  "appleWebApp": {
+    "title": "zeropamine",
+    "statusBarStyle": "black-translucent"
+  },
+  "themeColor": "#374151"
+}

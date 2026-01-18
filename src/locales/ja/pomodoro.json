@@ -1,0 +1,97 @@
+{
+  "aria": {
+    "coffeeMug": "コーヒーマグ",
+    "hourglass": "砂時計"
+  },
+  "theme": {
+    "coffee": "コーヒーマグ",
+    "hourglass": "砂時計"
+  },
+  "sound": {
+    "alarm": {
+      "label": "アラーム",
+      "description": "金属的なアラーム音"
+    },
+    "bell": {
+      "label": "ベル",
+      "description": "明るいベル音"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "description": "ポモドーロタイマーの設定を変更します。",
+    "focusDuration": {
+      "label": "集中時間（分）"
+    },
+    "breakDuration": {
+      "label": "休憩時間（分）"
+    },
+    "autoStart": {
+      "label": "自動開始",
+      "hint": "自動開始を有効にすると、集中/休憩時間が自動的に切り替わります。"
+    },
+    "theme": {
+      "label": "テーマ"
+    },
+    "sound": {
+      "label": "通知音"
+    },
+    "volume": {
+      "label": "音量",
+      "hint": "システム音量とは別に動作します。"
+    },
+    "actions": {
+      "cancel": "キャンセル",
+      "save": "保存"
+    }
+  },
+  "controls": {
+    "start": "開始",
+    "resume": "再開",
+    "pause": "一時停止",
+    "reset": "リセット",
+    "settings": "設定",
+    "aria": {
+      "start": "開始",
+      "resume": "再開",
+      "pause": "一時停止",
+      "reset": "リセット",
+      "settings": "設定"
+    }
+  },
+  "timer": {
+    "focus": "集中",
+    "break": "休憩",
+    "heading": "{mode}タイム"
+  },
+  "notifications": {
+    "title": "Zeropamine",
+    "focusReady": "休憩が終わりました。集中の時間です！",
+    "breakReady": "集中時間が終わりました。休憩しましょう！"
+  },
+  "page": {
+    "headline": "Zeropamine",
+    "sectionTitle": "ポモドーロタイマーで集中ルーティンを設計しよう",
+    "description": "zeropamineは、集中と休憩を交互に繰り返すポモドーロ・テクニックに基づいて設計されたオンラインタイマーです。直感的なインターフェースとアニメーションで、勉強、コーディング、仕事など様々な場面で集中状態を簡単に維持できます。",
+    "list": {
+      "customize": "集中/休憩時間を自由に調整して、自分だけのルーティンを構築",
+      "visual": "様々なテーマと進捗アニメーションで残り時間を直感的に確認"
+    },
+    "cta": "今日からzeropamineポモドーロタイマーで一日の集中力を設計し、計画した目標を最後まで達成しましょう。",
+    "progress": {
+      "ariaLabel": "タイマー進捗",
+      "ariaValue": "進捗率 {value}%"
+    },
+    "debug": {
+      "sound": "デバッグ：サウンドテスト",
+      "tenSeconds": "デバッグ：10秒テスト"
+    },
+    "notifications": {
+      "title": "通知を受け取る",
+      "description": "タイマー終了時に通知を受け取りますか？",
+      "allow": "許可"
+    },
+    "currentSettings": "集中 {focus}分 · 休憩 {break}分{autoStart, select, true { · 自動開始} other {}}",
+    "footer": "集中力のためのポモドーロタイマー"
+  }
+}

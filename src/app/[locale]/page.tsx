@@ -7,6 +7,7 @@ import { PomodoroVisualizer } from "@/components/pomodoro/PomodoroVisualizer";
 import { Timer } from "@/components/pomodoro/Timer";
 import { Controls } from "@/components/pomodoro/Controls";
 import { SettingsDialog } from "@/components/pomodoro/SettingsDialog";
+import { ContactDialog } from "@/components/contact/ContactDialog";
 import { usePomodoro } from "@/hooks/usePomodoro";
 import { Link } from "@/i18n/routing";
 
@@ -30,6 +31,7 @@ export default function Home() {
   const tPage = useTranslations("pomodoro.page");
   const tCommon = useTranslations("common");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [notificationPermission, setNotificationPermission] =
     useState<NotificationPermission>("default");
   const isDebug = process.env.NODE_ENV !== "production";
@@ -67,7 +69,7 @@ export default function Home() {
   }, [requestNotificationPermission]);
 
   return (
-    <main className="bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 flex flex-col items-center">
+    <main className="bg-[#20212E] flex flex-col items-center">
       <section className="relative flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-8">
         <header className="absolute top-4 sm:top-8 left-0 right-0 flex justify-center px-4">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
@@ -188,6 +190,14 @@ export default function Home() {
               <Link href="/terms" className="hover:underline">
                 {tCommon("footer.terms")}
               </Link>
+              <span className="text-gray-400">•</span>
+              <button
+                type="button"
+                onClick={() => setContactOpen(true)}
+                className="hover:underline"
+              >
+                {tCommon("footer.contact")}
+              </button>
             </div>
           </footer>
         </div>
@@ -200,6 +210,11 @@ export default function Home() {
         onSave={updateSettings}
         onPreviewSound={previewSound}
         onStopPreview={stopPreviewSound}
+      />
+
+      <ContactDialog
+        open={contactOpen}
+        onOpenChange={setContactOpen}
       />
     </main>
   );

@@ -1,6 +1,6 @@
 import { createNavigation } from "next-intl/navigation";
 
-export const locales = ["ko", "en"] as const;
+export const locales = ["ko", "en", "ja"] as const;
 
 export type Locale = (typeof locales)[number];
 

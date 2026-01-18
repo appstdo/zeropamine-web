@@ -1,0 +1,29 @@
+{
+  "title": "문의하기",
+  "description": "피드백이나 문의사항을 보내주세요.",
+  "category": {
+    "label": "문의 유형",
+    "bug": "버그 신고",
+    "feature": "기능 제안",
+    "payment": "결제 문의",
+    "account": "계정 문의",
+    "other": "기타"
+  },
+  "email": {
+    "label": "이메일 (선택)",
+    "placeholder": "답변을 받으실 이메일"
+  },
+  "message": {
+    "label": "메시지",
+    "placeholder": "문의 내용을 입력해주세요"
+  },
+  "actions": {
+    "cancel": "취소",
+    "submit": "보내기"
+  },
+  "status": {
+    "sending": "전송 중...",
+    "success": "문의가 접수되었습니다. 감사합니다!",
+    "error": "전송에 실패했습니다. 다시 시도해주세요."
+  }
+}

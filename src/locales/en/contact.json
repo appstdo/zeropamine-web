@@ -1,0 +1,29 @@
+{
+  "title": "Contact Us",
+  "description": "Send us your feedback or inquiries.",
+  "category": {
+    "label": "Category",
+    "bug": "Bug Report",
+    "feature": "Feature Request",
+    "payment": "Payment",
+    "account": "Account",
+    "other": "Other"
+  },
+  "email": {
+    "label": "Email (optional)",
+    "placeholder": "Your email for a response"
+  },
+  "message": {
+    "label": "Message",
+    "placeholder": "Please describe your inquiry"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "submit": "Submit"
+  },
+  "status": {
+    "sending": "Sending...",
+    "success": "Your inquiry has been submitted. Thank you!",
+    "error": "Failed to send. Please try again."
+  }
+}
