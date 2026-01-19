@@ -57,12 +57,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: t("openGraph.siteName"),
       title: t("openGraph.title"),
       description: t("openGraph.description"),
+      images: [
+        {
+          url: "/og_image.png",
+          width: 1200,
+          height: 630,
+          alt: t("openGraph.siteName"),
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       site: t("twitter.site"),
       title: t("twitter.title"),
       description: t("twitter.description"),
+      images: ["/og_image.png"],
     },
     appleWebApp: {
       capable: true,
