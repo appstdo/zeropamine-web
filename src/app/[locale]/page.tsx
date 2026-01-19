@@ -11,6 +11,7 @@ import { ContactDialog } from "@/components/contact/ContactDialog";
 import { AppInstallBanner } from "@/components/AppInstallBanner";
 import { usePomodoro } from "@/hooks/usePomodoro";
 import { Link } from "@/i18n/routing";
+import { appStoreUrl } from "@/lib/siteConfig";
 
 export default function Home() {
   const {
@@ -187,6 +188,37 @@ export default function Home() {
           <p className="text-sm sm:text-base leading-relaxed text-gray-600">
             {tPage("cta")}
           </p>
+
+          <div className="flex justify-center gap-3 pt-4">
+            <a
+              href={appStoreUrl.ios}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-80"
+            >
+              <Image
+                src="/ic_appstore.svg"
+                alt="Download on the App Store"
+                width={140}
+                height={47}
+                className="h-10 sm:h-12 w-auto"
+              />
+            </a>
+            <a
+              href={appStoreUrl.android}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-80"
+            >
+              <Image
+                src="/ic_playstore.svg"
+                alt="Get it on Google Play"
+                width={140}
+                height={47}
+                className="h-10 sm:h-12 w-auto"
+              />
+            </a>
+          </div>
 
           <footer className="pt-6 text-center text-gray-500 text-xs sm:text-sm">
             <p>{tPage("footer")}</p>
