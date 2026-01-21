@@ -74,7 +74,10 @@ export function AppInstallBanner() {
   const handleInstall = () => {
     if (!platform) return;
 
-    const url = platform === "ios" ? appStoreUrl.ios : appStoreUrl.android;
+    const url =
+      platform === "ios"
+        ? "https://apps.apple.com/app/apple-store/id6756612361?pt=118913035&ct=website_install_banner&mt=8"
+        : appStoreUrl.android;
     window.open(url, "_blank", "noopener,noreferrer");
   };
 

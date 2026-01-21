@@ -191,7 +191,7 @@ export default function Home() {
 
           <div className="flex justify-center gap-3 pt-4">
             <a
-              href={appStoreUrl.ios}
+              href="https://apps.apple.com/app/apple-store/id6756612361?pt=118913035&ct=website_footer&mt=8"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-opacity hover:opacity-80"
