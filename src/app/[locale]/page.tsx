@@ -170,26 +170,8 @@ export default function Home() {
               })}
             </p>
           </div>
-        </div>
-      </section>
 
-      <section className="w-full bg-white px-4 sm:px-6 py-12 sm:py-16 text-center text-gray-900 space-y-4">
-        <div className="mx-auto max-w-3xl space-y-4">
-          <h2 className="text-xl sm:text-2xl font-semibold">
-            {tPage("sectionTitle")}
-          </h2>
-          <p className="text-sm sm:text-base leading-relaxed text-gray-600">
-            {tPage("description")}
-          </p>
-          <ul className="text-left text-sm sm:text-base leading-relaxed text-gray-600 space-y-2 sm:space-y-3 list-disc list-inside sm:list-outside sm:pl-6">
-            <li>{tPage("list.customize")}</li>
-            <li>{tPage("list.visual")}</li>
-          </ul>
-          <p className="text-sm sm:text-base leading-relaxed text-gray-600">
-            {tPage("cta")}
-          </p>
-
-          <div className="flex justify-center gap-3 pt-4">
+          <div className="flex justify-center gap-3">
             <a
               href="https://apps.apple.com/app/apple-store/id6756612361?pt=118913035&ct=website_footer&mt=8"
               target="_blank"
@@ -219,6 +201,24 @@ export default function Home() {
               />
             </a>
           </div>
+        </div>
+      </section>
+
+      <section className="w-full bg-white px-4 sm:px-6 py-12 sm:py-16 text-center text-gray-900 space-y-4">
+        <div className="mx-auto max-w-3xl space-y-4">
+          <h2 className="text-xl sm:text-2xl font-semibold">
+            {tPage("sectionTitle")}
+          </h2>
+          <p className="text-sm sm:text-base leading-relaxed text-gray-600">
+            {tPage("description")}
+          </p>
+          <ul className="text-left text-sm sm:text-base leading-relaxed text-gray-600 space-y-2 sm:space-y-3 list-disc list-inside sm:list-outside sm:pl-6">
+            <li>{tPage("list.customize")}</li>
+            <li>{tPage("list.visual")}</li>
+          </ul>
+          <p className="text-sm sm:text-base leading-relaxed text-gray-600">
+            {tPage("cta")}
+          </p>
 
           <footer className="pt-6 text-center text-gray-500 text-xs sm:text-sm">
             <p>{tPage("footer")}</p>
