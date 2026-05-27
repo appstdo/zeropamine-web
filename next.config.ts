@@ -4,6 +4,20 @@ import type { NextConfig } from "next";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/:locale(ko|en|ja)",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/:locale(ko|en|ja)/:path*",
+        destination: "/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
